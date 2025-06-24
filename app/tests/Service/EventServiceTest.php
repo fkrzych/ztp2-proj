@@ -143,6 +143,9 @@ class EventServiceTest extends KernelTestCase
         $this->assertEquals($expectedResultSize, $result->count());
     }
 
+    /**
+     * Create user for testing purpose.
+     */
     private function createUser(array $roles): User
     {
         $hasher = static::getContainer()->get('security.password_hasher');
@@ -161,4 +164,3 @@ class EventServiceTest extends KernelTestCase
         return $user;
     }
 }
-

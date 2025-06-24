@@ -1,0 +1,159 @@
+
+Found 0 of 34 files that can be fixed in 0.491 seconds, 18.00 MB memory used
+   1) tests/Entity/CategoryEntityTest.php (blank_line_after_opening_tag, single_blank_line_at_eof)
+   2) tests/Entity/Enum/UserRoleTest.php (single_blank_line_at_eof)
+   3) tests/Entity/ContactEntityTest.php (blank_line_after_opening_tag, no_unused_imports, single_blank_line_at_eof)
+   4) tests/Controller/UserControllerTest.php (single_blank_line_at_eof)
+   5) tests/Controller/ContactControllerTest.php (blank_line_after_opening_tag, single_blank_line_at_eof)
+   6) tests/Controller/CategoryControllerTest.php (blank_line_after_opening_tag)
+   7) tests/Controller/SecurityControllerTest.php (no_unused_imports, single_blank_line_at_eof)
+   8) tests/Service/CategoryServiceTest.php (fully_qualified_strict_types, phpdoc_summary, phpdoc_separation)
+   9) tests/Service/EventServiceTest.php (phpdoc_summary, phpdoc_separation)
+
+Found 9 of 11 files that can be fixed in 0.252 seconds, 18.00 MB memory used
+WARNING: The Symfony standard uses 1 deprecated sniff
+-------------------------------------------------------------------------------
+-  Generic.Functions.CallTimePassByReference
+   This sniff has been deprecated since v3.12.1 and will be removed in v4.0.0.
+
+Deprecated sniffs are still run, but will stop working at some point in the future.
+
+WARNING: The Symfony standard uses 1 deprecated sniff
+-------------------------------------------------------------------------------
+-  Generic.Functions.CallTimePassByReference
+   This sniff has been deprecated since v3.12.1 and will be removed in v4.0.0.
+
+Deprecated sniffs are still run, but will stop working at some point in the future.
+
+
+FILE: /home/wwwroot/app/tests/Entity/CategoryEntityTest.php
+----------------------------------------------------------------------------
+FOUND 1 ERROR AND 1 WARNING AFFECTING 2 LINES
+----------------------------------------------------------------------------
+  2 | WARNING | [ ] The license block has to be present at the top
+    |         |                     of every PHP file, before the namespace
+ 26 | ERROR   | [x] Expected 1 newline at end of file; 0 found
+----------------------------------------------------------------------------
+PHPCBF CAN FIX THE 1 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------------
+
+
+FILE: /home/wwwroot/app/tests/Entity/Enum/UserRoleTest.php
+----------------------------------------------------------------------------
+FOUND 1 ERROR AND 1 WARNING AFFECTING 2 LINES
+----------------------------------------------------------------------------
+  3 | WARNING | [ ] The license block has to be present at the top
+    |         |                     of every PHP file, before the namespace
+ 30 | ERROR   | [x] Expected 1 newline at end of file; 0 found
+----------------------------------------------------------------------------
+PHPCBF CAN FIX THE 1 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------------
+
+
+FILE: /home/wwwroot/app/tests/Entity/ContactEntityTest.php
+----------------------------------------------------------------------------
+FOUND 1 ERROR AND 1 WARNING AFFECTING 2 LINES
+----------------------------------------------------------------------------
+  2 | WARNING | [ ] The license block has to be present at the top
+    |         |                     of every PHP file, before the namespace
+ 28 | ERROR   | [x] Expected 1 newline at end of file; 0 found
+----------------------------------------------------------------------------
+PHPCBF CAN FIX THE 1 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------------
+
+
+FILE: /home/wwwroot/app/tests/Controller/UserControllerTest.php
+----------------------------------------------------------------------
+FOUND 1 ERROR AFFECTING 1 LINE
+----------------------------------------------------------------------
+ 27 | ERROR | [x] Expected 1 newline at end of file; 0 found
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 1 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /home/wwwroot/app/tests/Controller/ContactControllerTest.php
+-----------------------------------------------------------------------------
+FOUND 1 ERROR AND 1 WARNING AFFECTING 2 LINES
+-----------------------------------------------------------------------------
+   2 | WARNING | [ ] The license block has to be present at the top
+     |         |                     of every PHP file, before the namespace
+ 214 | ERROR   | [x] Expected 1 newline at end of file; 0 found
+-----------------------------------------------------------------------------
+PHPCBF CAN FIX THE 1 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+-----------------------------------------------------------------------------
+
+
+FILE: /home/wwwroot/app/tests/Controller/CategoryControllerTest.php
+-----------------------------------------------------------------------
+FOUND 0 ERRORS AND 1 WARNING AFFECTING 1 LINE
+-----------------------------------------------------------------------
+ 2 | WARNING | The license block has to be present at the top
+   |         |                 of every PHP file, before the namespace
+-----------------------------------------------------------------------
+
+
+FILE: /home/wwwroot/app/tests/Controller/SecurityControllerTest.php
+------------------------------------------------------------------------------------------
+FOUND 2 ERRORS AFFECTING 2 LINES
+------------------------------------------------------------------------------------------
+ 52 | ERROR | [ ] Missing doc comment for function testLogoutMethodThrowsLogicException()
+ 59 | ERROR | [x] Expected 1 newline at end of file; 0 found
+------------------------------------------------------------------------------------------
+PHPCBF CAN FIX THE 1 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+------------------------------------------------------------------------------------------
+
+
+FILE: /home/wwwroot/app/tests/Service/CategoryServiceTest.php
+---------------------------------------------------------------------------------------------------------
+FOUND 2 ERRORS AFFECTING 2 LINES
+---------------------------------------------------------------------------------------------------------
+ 138 | ERROR | Missing doc comment for function testCanBeDeletedReturnsFalseOnNoResultException()
+ 152 | ERROR | Missing doc comment for function testCanBeDeletedReturnsFalseOnNonUniqueResultException()
+---------------------------------------------------------------------------------------------------------
+
+
+FILE: /home/wwwroot/app/tests/Service/MainServiceTest.php
+-------------------------------------------------------------------------------
+FOUND 5 ERRORS AND 1 WARNING AFFECTING 6 LINES
+-------------------------------------------------------------------------------
+  3 | WARNING | The license block has to be present at the top
+    |         |                 of every PHP file, before the namespace
+ 12 | ERROR   | Missing doc comment for class MainServiceTest
+ 18 | ERROR   | Missing doc comment for function setUp()
+ 29 | ERROR   | Missing doc comment for function testGetPaginatedList()
+ 51 | ERROR   | Missing doc comment for function testIfCurrentsExistReturns1()
+ 65 | ERROR   | Missing doc comment for function testIfCurrentsExistReturns0()
+-------------------------------------------------------------------------------
+
+
+FILE: /home/wwwroot/app/tests/Service/EventServiceTest.php
+----------------------------------------------------------------------
+FOUND 2 ERRORS AFFECTING 2 LINES
+----------------------------------------------------------------------
+ 146 | ERROR | Doc comment for parameter "$roles" missing
+ 148 | ERROR | Missing @return tag in function comment
+----------------------------------------------------------------------
+
+Time: 440ms; Memory: 10MB
+
+ ------- -------- ---- ---------------------- 
+  State   Domain   Id   Message Preview (en)  
+ ------- -------- ---- ---------------------- 
+
+ ------- -------- ---- ---------------------- ------------------------------- 
+  State   Domain   Id   Message Preview (pl)   Fallback Message Preview (en)  
+ ------- -------- ---- ---------------------- ------------------------------- 
+
+[notice] Migrating up to DoctrineMigrations\Version20250624224520
+[notice] finished in 124.9ms, used 24M memory, 1 migrations executed, 8 sql queries
+
+ [OK] Successfully migrated to version: DoctrineMigrations\Version20250624224520                                        
+
+
+   > purging database
+   > loading App\DataFixtures\AppFixtures
+   > loading App\DataFixtures\CategoryFixtures
+   > loading App\DataFixtures\UserFixtures
+   > loading App\DataFixtures\ContactFixtures
+   > loading App\DataFixtures\EventFixtures
