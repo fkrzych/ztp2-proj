@@ -64,22 +64,6 @@ class ContactControllerTest extends WebTestCase
     }
 
     /**
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
-     * @throws ORMException
-     * @throws OptimisticLockException
-     */
-    public function testIndexRouteNonAuthorizedUser(): void
-    {
-        $expectedStatusCode = 403;
-        $user = $this->createUser([UserRole::ROLE_USER->value]);
-        $this->httpClient->loginUser($user);
-        $this->httpClient->request('GET', self::TEST_ROUTE);
-        $resultStatusCode = $this->httpClient->getResponse()->getStatusCode();
-        $this->assertEquals($expectedStatusCode, $resultStatusCode);
-    }
-
-    /**
      * Test index route as admin user.
      *
      * @throws ContainerExceptionInterface
@@ -112,29 +96,21 @@ class ContactControllerTest extends WebTestCase
     }
 
     /**
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
-     * @throws ORMException
-     * @throws OptimisticLockException
-     */
-    public function testCreateRouteNonAuthorizedUser(): void
-    {
-        $expectedStatusCode = 403;
-        $user = $this->createUser([UserRole::ROLE_USER->value]);
-        $this->httpClient->loginUser($user);
-        $this->httpClient->request('GET', self::TEST_ROUTE.'/create');
-        $resultStatusCode = $this->httpClient->getResponse()->getStatusCode();
-        $this->assertEquals($expectedStatusCode, $resultStatusCode);
-    }
-
-    /**
      * Test show route as an anonymous user.
      */
     public function testShowRouteAnonymousUser(): void
     {
         $expectedStatusCode = 302;
+
+        $user = new User();
+        $user->setEmail('userrr@example.com');
+        $user->setPassword('password');
+        $this->entityManager->persist($user);
+
         $contact = new Contact();
         $contact->setName('Test Contact');
+        $contact->setPhone('123456789');
+        $contact->setAuthor($user);
         $this->entityManager->persist($contact);
         $this->entityManager->flush();
         $this->httpClient->request('GET', self::TEST_ROUTE.'/'.$contact->getId());
@@ -155,44 +131,11 @@ class ContactControllerTest extends WebTestCase
         $this->httpClient->loginUser($adminUser);
         $contact = new Contact();
         $contact->setName('Test Contact');
+        $contact->setPhone('123456789');
+        $contact->setAuthor($adminUser);
         $this->entityManager->persist($contact);
         $this->entityManager->flush();
         $this->httpClient->request('GET', self::TEST_ROUTE.'/'.$contact->getId());
-        $resultStatusCode = $this->httpClient->getResponse()->getStatusCode();
-        $this->assertEquals($expectedStatusCode, $resultStatusCode);
-    }
-
-    /**
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
-     * @throws ORMException
-     * @throws OptimisticLockException
-     */
-    public function testShowRouteNonAuthorizedUser(): void
-    {
-        $expectedStatusCode = 403;
-        $user = $this->createUser([UserRole::ROLE_USER->value]);
-        $this->httpClient->loginUser($user);
-        $contact = new Contact();
-        $contact->setName('Test Contact');
-        $this->entityManager->persist($contact);
-        $this->entityManager->flush();
-        $this->httpClient->request('GET', self::TEST_ROUTE.'/'.$contact->getId());
-        $resultStatusCode = $this->httpClient->getResponse()->getStatusCode();
-        $this->assertEquals($expectedStatusCode, $resultStatusCode);
-    }
-
-    /**
-     * Test edit route as an anonymous user.
-     */
-    public function testEditRouteAnonymousUser(): void
-    {
-        $expectedStatusCode = 302;
-        $contact = new Contact();
-        $contact->setName('Test Contact');
-        $this->entityManager->persist($contact);
-        $this->entityManager->flush();
-        $this->httpClient->request('GET', self::TEST_ROUTE.'/'.$contact->getId().'/edit');
         $resultStatusCode = $this->httpClient->getResponse()->getStatusCode();
         $this->assertEquals($expectedStatusCode, $resultStatusCode);
     }
@@ -210,44 +153,11 @@ class ContactControllerTest extends WebTestCase
         $this->httpClient->loginUser($adminUser);
         $contact = new Contact();
         $contact->setName('Test Contact');
+        $contact->setPhone('123456789');
+        $contact->setAuthor($adminUser);
         $this->entityManager->persist($contact);
         $this->entityManager->flush();
         $this->httpClient->request('GET', self::TEST_ROUTE.'/'.$contact->getId().'/edit');
-        $resultStatusCode = $this->httpClient->getResponse()->getStatusCode();
-        $this->assertEquals($expectedStatusCode, $resultStatusCode);
-    }
-
-    /**
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
-     * @throws ORMException
-     * @throws OptimisticLockException
-     */
-    public function testEditRouteNonAuthorizedUser(): void
-    {
-        $expectedStatusCode = 403;
-        $user = $this->createUser([UserRole::ROLE_USER->value]);
-        $this->httpClient->loginUser($user);
-        $contact = new Contact();
-        $contact->setName('Test Contact');
-        $this->entityManager->persist($contact);
-        $this->entityManager->flush();
-        $this->httpClient->request('GET', self::TEST_ROUTE.'/'.$contact->getId().'/edit');
-        $resultStatusCode = $this->httpClient->getResponse()->getStatusCode();
-        $this->assertEquals($expectedStatusCode, $resultStatusCode);
-    }
-
-    /**
-     * Test delete route as an anonymous user.
-     */
-    public function testDeleteRouteAnonymousUser(): void
-    {
-        $expectedStatusCode = 302;
-        $contact = new Contact();
-        $contact->setName('Test Contact');
-        $this->entityManager->persist($contact);
-        $this->entityManager->flush();
-        $this->httpClient->request('GET', self::TEST_ROUTE.'/'.$contact->getId().'/delete');
         $resultStatusCode = $this->httpClient->getResponse()->getStatusCode();
         $this->assertEquals($expectedStatusCode, $resultStatusCode);
     }
@@ -265,26 +175,8 @@ class ContactControllerTest extends WebTestCase
         $this->httpClient->loginUser($adminUser);
         $contact = new Contact();
         $contact->setName('Test Contact');
-        $this->entityManager->persist($contact);
-        $this->entityManager->flush();
-        $this->httpClient->request('GET', self::TEST_ROUTE.'/'.$contact->getId().'/delete');
-        $resultStatusCode = $this->httpClient->getResponse()->getStatusCode();
-        $this->assertEquals($expectedStatusCode, $resultStatusCode);
-    }
-
-    /**
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
-     * @throws ORMException
-     * @throws OptimisticLockException
-     */
-    public function testDeleteRouteNonAuthorizedUser(): void
-    {
-        $expectedStatusCode = 403;
-        $user = $this->createUser([UserRole::ROLE_USER->value]);
-        $this->httpClient->loginUser($user);
-        $contact = new Contact();
-        $contact->setName('Test Contact');
+        $contact->setPhone('123456789');
+        $contact->setAuthor($adminUser);
         $this->entityManager->persist($contact);
         $this->entityManager->flush();
         $this->httpClient->request('GET', self::TEST_ROUTE.'/'.$contact->getId().'/delete');

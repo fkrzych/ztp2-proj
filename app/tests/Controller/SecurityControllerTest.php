@@ -28,14 +28,11 @@ class SecurityControllerTest extends WebTestCase
      */
     public function testLoginRoute(): void
     {
-        // given
         $expectedStatusCode = 200;
 
-        // when
         $this->httpClient->request('GET', '/login');
         $statusCode = $this->httpClient->getResponse()->getStatusCode();
 
-        // then
         $this->assertEquals($statusCode, $expectedStatusCode);
     }
 
@@ -44,14 +41,11 @@ class SecurityControllerTest extends WebTestCase
      */
     public function testLogoutRoute(): void
     {
-        // given
         $expectedStatusCode = 302;
 
-        // when
         $this->httpClient->request('GET', '/logout');
         $statusCode = $this->httpClient->getResponse()->getStatusCode();
 
-        // then
         $this->assertEquals($statusCode, $expectedStatusCode);
     }
 
@@ -60,6 +54,6 @@ class SecurityControllerTest extends WebTestCase
         $this->expectException(\LogicException::class);
 
         $controller = new \App\Controller\SecurityController();
-        $controller->logout(); // Directly call the method
+        $controller->logout();
     }
 }

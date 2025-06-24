@@ -28,7 +28,6 @@ class MainServiceTest extends TestCase
 
     public function testGetPaginatedList(): void
     {
-        // Given
         $page = 1;
         $user = new User();
         $queryBuilderMock = $this->createMock(\Doctrine\ORM\QueryBuilder::class);
@@ -44,16 +43,13 @@ class MainServiceTest extends TestCase
             ->with($queryBuilderMock, $page, $this->anything())
             ->willReturn($paginationMock);
 
-        // When
         $result = $this->mainService->getPaginatedList($page, $user);
 
-        // Then
         $this->assertSame($paginationMock, $result);
     }
 
     public function testIfCurrentsExistReturns1(): void
     {
-        // Given
         $user = new User();
 
         $this->eventRepository
@@ -61,16 +57,13 @@ class MainServiceTest extends TestCase
             ->with($user)
             ->willReturn(['some_data']);
 
-        // When
         $result = $this->mainService->ifCurrentsExist($user);
 
-        // Then
         $this->assertEquals(1, $result);
     }
 
     public function testIfCurrentsExistReturns0(): void
     {
-        // Given
         $user = new User();
 
         $this->eventRepository
@@ -78,10 +71,8 @@ class MainServiceTest extends TestCase
             ->with($user)
             ->willReturn([]);
 
-        // When
         $result = $this->mainService->ifCurrentsExist($user);
 
-        // Then
         $this->assertEquals(0, $result);
     }
 }

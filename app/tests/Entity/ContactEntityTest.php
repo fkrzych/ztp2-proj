@@ -14,7 +14,7 @@ class ContactEntityTest extends TestCase
     /**
      * Test can get and set data.
      */
-    public function TestGetSetData(): void
+    public function testGetSetData(): void
     {
         $testedContact = new Contact();
         $testedContact->setName('Mariusz');

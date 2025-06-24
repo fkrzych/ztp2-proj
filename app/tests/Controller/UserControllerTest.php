@@ -17,16 +17,10 @@ class UserControllerTest extends WebTestCase
      */
     public function testControllerRoute(): void
     {
-        // given
-
         $client = static::createClient();
-
-        // when
 
         $client->request('GET', '/user');
         $responseCode = $client->getResponse()->getStatusCode();
-
-        // then
 
         $this->assertEquals(404, $responseCode);
     }

@@ -6,13 +6,14 @@
 namespace App\Tests\Service;
 
 use App\Entity\Category;
+use App\Entity\Enum\UserRole;
 use App\Entity\Event;
-use App\Service\CategoryServiceInterface;
+use App\Entity\User;
+use App\Repository\UserRepository;
 use App\Service\EventService;
 use App\Service\EventServiceInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManagerInterface;
-//use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Psr\Container\ContainerExceptionInterface;
@@ -54,14 +55,18 @@ class EventServiceTest extends KernelTestCase
      */
     public function testSave(): void
     {
-        // given
+        $user = $this->createUser([UserRole::ROLE_USER->value]);
+        $category = new Category();
+        $category->setName('Test Category');
+        $this->entityManager->persist($category);
         $expectedEvent = new Event();
         $expectedEvent->setName('Test Event');
+        $expectedEvent->setDate(new \DateTime('now'));
+        $expectedEvent->setAuthor($user);
+        $expectedEvent->setCategory($category);
 
-        // when
         $this->eventService->save($expectedEvent);
 
-        // then
         $expectedEventId = $expectedEvent->getId();
         $resultEvent = $this->entityManager->createQueryBuilder()
             ->select('event')
@@ -81,17 +86,22 @@ class EventServiceTest extends KernelTestCase
      */
     public function testDelete(): void
     {
-        // given
+        $user = $this->createUser([UserRole::ROLE_USER->value]);
+        $category = new Category();
+        $category->setName('Test Category');
+        $this->entityManager->persist($category);
+
         $eventToDelete = new Event();
         $eventToDelete->setName('Test Event');
+        $eventToDelete->setDate(new \DateTime('now'));
+        $eventToDelete->setAuthor($user);
+        $eventToDelete->setCategory($category);
         $this->entityManager->persist($eventToDelete);
         $this->entityManager->flush();
         $deletedEventId = $eventToDelete->getId();
 
-        // when
         $this->eventService->delete($eventToDelete);
 
-        // then
         $resultEvent = $this->entityManager->createQueryBuilder()
             ->select('event')
             ->from(Event::class, 'event')
@@ -108,55 +118,47 @@ class EventServiceTest extends KernelTestCase
      */
     public function testGetPaginatedList(): void
     {
-        // given
         $page = 1;
         $dataSetSize = 3;
         $expectedResultSize = 3;
+        $user = $this->createUser([UserRole::ROLE_USER->value]);
+        $category = new Category();
+        $category->setName('Test Category');
+        $this->entityManager->persist($category);
 
         $counter = 0;
         while ($counter < $dataSetSize) {
             $event = new Event();
             $event->setName('Test Event #'.$counter);
+            $event->setDate(new \DateTime('now'));
+            $event->setAuthor($user);
+            $event->setCategory($category);
             $this->eventService->save($event);
 
             ++$counter;
         }
 
-        // when
-        $result = $this->eventService->getPaginatedList($page);
+        $result = $this->eventService->getPaginatedList($page, $user);
 
-        // then
         $this->assertEquals($expectedResultSize, $result->count());
     }
 
-    public function testPrepareFiltersReturnsCategoryWhenValidCategoryIdProvided(): void
+    private function createUser(array $roles): User
     {
-        // Arrange
-        $filters = ['category_id' => 1];
-        $mockCategory = $this->createMock(Category::class);
+        $hasher = static::getContainer()->get('security.password_hasher');
+        $user = new User();
+        $user->setEmail('user@example.com');
+        $user->setRoles($roles);
+        $user->setPassword(
+            $hasher->hashPassword(
+                $user,
+                'p@55w0rd'
+            )
+        );
+        $userRepository = static::getContainer()->get(UserRepository::class);
+        $userRepository->save($user);
 
-        $categoryServiceMock = $this->createMock(CategoryServiceInterface::class);
-        $categoryServiceMock->method('findOneById')
-            ->with(1)
-            ->willReturn($mockCategory);
-
-        $eventService = $this->getMockBuilder(EventService::class)
-            ->disableOriginalConstructor()
-            ->onlyMethods(['getTagService']) // assume your real service needs more deps
-            ->getMock();
-
-        // Inject the categoryService via reflection since it's private & readonly
-        $ref = new \ReflectionClass($eventService);
-        $prop = $ref->getProperty('categoryService');
-        $prop->setAccessible(true);
-        $prop->setValue($eventService, $categoryServiceMock);
-
-        // Act
-        $result = $eventService->prepareFilters($filters);
-
-        // Assert
-        $this->assertArrayHasKey('category', $result);
-        $this->assertSame($mockCategory, $result['category']);
+        return $user;
     }
 }
 

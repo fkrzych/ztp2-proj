@@ -51,14 +51,11 @@ class CategoryServiceTest extends KernelTestCase
      */
     public function testSave(): void
     {
-        // given
         $expectedCategory = new Category();
         $expectedCategory->setName('Test Category');
 
-        // when
         $this->categoryService->save($expectedCategory);
 
-        // then
         $expectedCategoryId = $expectedCategory->getId();
         $resultCategory = $this->entityManager->createQueryBuilder()
             ->select('category')
@@ -78,17 +75,14 @@ class CategoryServiceTest extends KernelTestCase
      */
     public function testDelete(): void
     {
-        // given
         $categoryToDelete = new Category();
         $categoryToDelete->setName('Test Category');
         $this->entityManager->persist($categoryToDelete);
         $this->entityManager->flush();
         $deletedCategoryId = $categoryToDelete->getId();
 
-        // when
         $this->categoryService->delete($categoryToDelete);
 
-        // then
         $resultCategory = $this->entityManager->createQueryBuilder()
             ->select('category')
             ->from(Category::class, 'category')
@@ -107,17 +101,14 @@ class CategoryServiceTest extends KernelTestCase
      */
     public function testFindById(): void
     {
-        // given
         $expectedCategory = new Category();
         $expectedCategory->setName('Test Category');
         $this->entityManager->persist($expectedCategory);
         $this->entityManager->flush();
         $expectedCategoryId = $expectedCategory->getId();
 
-        // when
         $resultCategory = $this->categoryService->findOneById($expectedCategoryId);
 
-        // then
         $this->assertEquals($expectedCategory, $resultCategory);
     }
 
@@ -126,7 +117,6 @@ class CategoryServiceTest extends KernelTestCase
      */
     public function testGetPaginatedList(): void
     {
-        // given
         $page = 1;
         $dataSetSize = 3;
         $expectedResultSize = 3;
@@ -140,10 +130,8 @@ class CategoryServiceTest extends KernelTestCase
             ++$counter;
         }
 
-        // when
         $result = $this->categoryService->getPaginatedList($page);
 
-        // then
         $this->assertEquals($expectedResultSize, $result->count());
     }
 
