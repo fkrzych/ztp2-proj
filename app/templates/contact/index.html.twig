@@ -50,7 +50,6 @@
         <a href="{{ url('event_index') }}" title="{{ 'events.link'|trans }}">{{ 'events.link'|trans }}</a>
         {% if is_granted('ROLE_ADMIN') %}
         <a href="{{ url('category_index') }}" title="{{ 'categories.link'|trans }}">{{ 'categories.link'|trans }}</a>
-        <a href="{{ url('user_index') }}" title="{{ 'users.link'|trans }}">{{ 'users.link'|trans }}</a>
         {% endif %}
     </div>
 {% endblock  %}

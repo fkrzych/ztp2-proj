@@ -5,6 +5,9 @@
 
 namespace App\Tests\Controller;
 
+use App\Entity\Enum\UserRole;
+use App\Entity\User;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
@@ -13,41 +16,50 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 class SecurityControllerTest extends WebTestCase
 {
     /**
-     * Test Login Route.
+     * Set up function.
      */
-    public function testLoginRoute(): void
+    public function setUp(): void
     {
-        // given
-
-        $client = static::createClient();
-
-        // when
-
-        $client->request('GET', '/login');
-        $responseCode = $client->getResponse()->getStatusCode();
-
-        // then
-
-        $this->assertEquals(200, $responseCode);
+        $this->httpClient = static::createClient();
     }
 
     /**
      * Test Login Route.
      */
+    public function testLoginRoute(): void
+    {
+        // given
+        $expectedStatusCode = 200;
+
+        // when
+        $this->httpClient->request('GET', '/login');
+        $statusCode = $this->httpClient->getResponse()->getStatusCode();
+
+        // then
+        $this->assertEquals($statusCode, $expectedStatusCode);
+    }
+
+    /**
+     * Test logout route.
+     */
     public function testLogoutRoute(): void
     {
         // given
-
-        $client = static::createClient();
+        $expectedStatusCode = 302;
 
         // when
-
-        $client->request('GET', '/logout');
-        $responseCode = $client->getResponse()->getStatusCode();
+        $this->httpClient->request('GET', '/logout');
+        $statusCode = $this->httpClient->getResponse()->getStatusCode();
 
         // then
+        $this->assertEquals($statusCode, $expectedStatusCode);
+    }
 
-        $this->assertEquals(302, $responseCode);
+    public function testLogoutMethodThrowsLogicException(): void
+    {
+        $this->expectException(\LogicException::class);
+
+        $controller = new \App\Controller\SecurityController();
+        $controller->logout(); // Directly call the method
     }
 }
-

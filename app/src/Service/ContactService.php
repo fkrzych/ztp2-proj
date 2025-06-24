@@ -52,26 +52,6 @@ class ContactService implements ContactServiceInterface
     }
 
     /**
-     * Get paginated list for search.
-     *
-     * @param int    $page    Page number
-     * @param User   $author  Author
-     * @param string $pattern Pattern for searching
-     *
-     * @return PaginationInterface<string, mixed> Paginated list
-     */
-    public function getPaginatedListSearch(int $page, User $author, string $pattern): PaginationInterface
-    {
-        $pattern = $this->preparePattern($pattern);
-
-        return $this->paginator->paginate(
-            $this->contactRepository->querySearch($author, $pattern),
-            $page,
-            ContactRepository::PAGINATOR_ITEMS_PER_PAGE
-        );
-    }
-
-    /**
      * Save entity.
      *
      * @param Contact $contact Contact entity

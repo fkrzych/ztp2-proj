@@ -17,8 +17,6 @@ use Knp\Component\Pager\PaginatorInterface;
  */
 class EventService implements EventServiceInterface
 {
-    public $tagService;
-
     /**
      * Constructor.
      *
@@ -47,26 +45,6 @@ class EventService implements EventServiceInterface
 
         return $this->paginator->paginate(
             $this->eventRepository->queryByAuthor($author, $filters),
-            $page,
-            EventRepository::PAGINATOR_ITEMS_PER_PAGE
-        );
-    }
-
-    /**
-     * Get paginated list for search.
-     *
-     * @param int    $page    Page number
-     * @param User   $author  Author
-     * @param string $pattern Pattern
-     *
-     * @return PaginationInterface<string, mixed> Paginated list
-     */
-    public function getPaginatedListSearch(int $page, User $author, string $pattern): PaginationInterface
-    {
-        $pattern = $this->preparePattern($pattern);
-
-        return $this->paginator->paginate(
-            $this->eventRepository->querySearch($author, $pattern),
             $page,
             EventRepository::PAGINATOR_ITEMS_PER_PAGE
         );
@@ -112,25 +90,6 @@ class EventService implements EventServiceInterface
             }
         }
 
-        if (!empty($filters['tag_id'])) {
-            $tag = $this->tagService->findOneById($filters['tag_id']);
-            if ($tag instanceof \App\Entity\Tag) {
-                $resultFilters['tag'] = $tag;
-            }
-        }
-
         return $resultFilters;
-    }
-
-    /**
-     * Prepare pattern.
-     *
-     * @param string $pattern Pattern for searching
-     *
-     * @return string Result pattern
-     */
-    private function preparePattern(string $pattern): string
-    {
-        return $pattern;
     }
 }
