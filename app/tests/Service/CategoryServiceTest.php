@@ -1,6 +1,8 @@
 <?php
 /**
- * Category service tests.
+ * This test file is a part of the ZTP2 project.
+ *
+ * (c) Filip Krzych <filip.krzych@student.uj.edu.pl>
  */
 
 namespace App\Tests\Service;
@@ -46,7 +48,8 @@ class CategoryServiceTest extends KernelTestCase
 
     /**
      * Test save.
-     *s
+     *s.
+     *
      * @throws ORMExceptions
      */
     public function testSave(): void
@@ -135,6 +138,9 @@ class CategoryServiceTest extends KernelTestCase
         $this->assertEquals($expectedResultSize, $result->count());
     }
 
+    /**
+     * Test if category can be deleted returns False On No Result Exception.
+     */
     public function testCanBeDeletedReturnsFalseOnNoResultException(): void
     {
         $mockEventRepo = $this->createMock(\App\Repository\EventRepository::class);
@@ -143,12 +149,15 @@ class CategoryServiceTest extends KernelTestCase
         $mockCategoryRepo = $this->createMock(\App\Repository\CategoryRepository::class);
         $mockPaginator = $this->createMock(\Knp\Component\Pager\PaginatorInterface::class);
 
-        $service = new \App\Service\CategoryService($mockCategoryRepo, $mockEventRepo, $mockPaginator);
+        $service = new CategoryService($mockCategoryRepo, $mockEventRepo, $mockPaginator);
 
-        $category = new \App\Entity\Category();
+        $category = new Category();
         $this->assertFalse($service->canBeDeleted($category));
     }
 
+    /**
+     * Test if category can be deleted returns False On Non Unique Result Exception.
+     */
     public function testCanBeDeletedReturnsFalseOnNonUniqueResultException(): void
     {
         $mockEventRepo = $this->createMock(\App\Repository\EventRepository::class);
@@ -157,9 +166,9 @@ class CategoryServiceTest extends KernelTestCase
         $mockCategoryRepo = $this->createMock(\App\Repository\CategoryRepository::class);
         $mockPaginator = $this->createMock(\Knp\Component\Pager\PaginatorInterface::class);
 
-        $service = new \App\Service\CategoryService($mockCategoryRepo, $mockEventRepo, $mockPaginator);
+        $service = new CategoryService($mockCategoryRepo, $mockEventRepo, $mockPaginator);
 
-        $category = new \App\Entity\Category();
+        $category = new Category();
         $this->assertFalse($service->canBeDeleted($category));
     }
 }

@@ -1,4 +1,10 @@
 <?php
+/**
+ * This test file is a part of the ZTP2 project.
+ *
+ * (c) Filip Krzych <filip.krzych@student.uj.edu.pl>
+ */
+
 namespace App\Tests\Entity;
 
 use App\Entity\Category;

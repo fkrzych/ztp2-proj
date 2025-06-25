@@ -1,13 +1,12 @@
 <?php
 /**
- * Security Controller Test.
+ * This test file is a part of the ZTP2 project.
+ *
+ * (c) Filip Krzych <filip.krzych@student.uj.edu.pl>
  */
 
 namespace App\Tests\Controller;
 
-use App\Entity\Enum\UserRole;
-use App\Entity\User;
-use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
@@ -49,6 +48,9 @@ class SecurityControllerTest extends WebTestCase
         $this->assertEquals($statusCode, $expectedStatusCode);
     }
 
+    /**
+     * Test Logout Method Throws Logic Exception.
+     */
     public function testLogoutMethodThrowsLogicException(): void
     {
         $this->expectException(\LogicException::class);

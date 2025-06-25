@@ -1,6 +1,8 @@
 <?php
 /**
- * User Controller Test.
+ * This test file is a part of the ZTP2 project.
+ *
+ * (c) Filip Krzych <filip.krzych@student.uj.edu.pl>
  */
 
 namespace App\Tests\Controller;

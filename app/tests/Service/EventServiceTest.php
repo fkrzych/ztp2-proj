@@ -1,6 +1,8 @@
 <?php
 /**
- * Event service tests.
+ * This test file is a part of the ZTP2 project.
+ *
+ * (c) Filip Krzych <filip.krzych@student.uj.edu.pl>
  */
 
 namespace App\Tests\Service;
@@ -50,7 +52,7 @@ class EventServiceTest extends KernelTestCase
 
     /**
      * Test save.
-     *s
+     *
      * @throws ORMExceptions
      */
     public function testSave(): void
@@ -145,6 +147,10 @@ class EventServiceTest extends KernelTestCase
 
     /**
      * Create user for testing purpose.
+     *
+     * @param array $roles User roles
+     *
+     * @return User $user
      */
     private function createUser(array $roles): User
     {

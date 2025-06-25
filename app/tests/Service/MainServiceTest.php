@@ -1,4 +1,9 @@
 <?php
+/**
+ * This test file is a part of the ZTP2 project.
+ *
+ * (c) Filip Krzych <filip.krzych@student.uj.edu.pl>
+ */
 
 namespace App\Tests\Service;
 
@@ -9,12 +14,18 @@ use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Class MainServiceTest.
+ */
 class MainServiceTest extends TestCase
 {
     private EventRepository $eventRepository;
     private PaginatorInterface $paginator;
     private MainService $mainService;
 
+    /**
+     * Set up test.
+     */
     protected function setUp(): void
     {
         $this->eventRepository = $this->createMock(EventRepository::class);
@@ -26,6 +37,9 @@ class MainServiceTest extends TestCase
         );
     }
 
+    /**
+     * Test Get Paginated List.
+     */
     public function testGetPaginatedList(): void
     {
         $page = 1;
@@ -48,6 +62,9 @@ class MainServiceTest extends TestCase
         $this->assertSame($paginationMock, $result);
     }
 
+    /**
+     * Test If Currents Exist Returns 1.
+     */
     public function testIfCurrentsExistReturns1(): void
     {
         $user = new User();
@@ -62,6 +79,9 @@ class MainServiceTest extends TestCase
         $this->assertEquals(1, $result);
     }
 
+    /**
+     * Test If Currents Exist Returns 0.
+     */
     public function testIfCurrentsExistReturns0(): void
     {
         $user = new User();
